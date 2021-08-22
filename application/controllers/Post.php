@@ -30,9 +30,19 @@ class Post extends CI_Controller
 
         $valid = $this->post_model->create_post();
 
-        if ($valid) {
-            redirect('/');
-        }
+        $valid ? 
+
+        $data = array(
+            'success' => true,
+            'message' => '',
+        )
+        :
+        $data = array(
+            'success' => false,
+            'message' => 'Error encountered when adding post',
+        );
+
+        echo json_encode($data);
     }
 
     public function edit($slug)
@@ -80,7 +90,7 @@ class Post extends CI_Controller
 
         echo $valid;
         exit;
-        
+
         $valid ?  
             
         $data = array(

@@ -20,11 +20,9 @@ class Auth_model extends CI_Model
 
     }
 
-    public function login(){
+    public function login($username, $password){
 
-        $username = $this->input->post('username');
-        $password = $this->input->post('password');
-
+      
         $this->db->where('username', $username);
         $result = $this->db->get('users');
 

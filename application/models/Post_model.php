@@ -15,11 +15,14 @@ class Post_model extends CI_Model
 
         if ($slug === false) {
 
+            $this->db->order_by('created_at', 'DESC');
             $query = $this->db->get('posts');
             return $query->result_array();
         }
 
+       
         $this->db->where('slug', $slug);
+        $this->db->order_by('created_at', "DESC");
         $query = $this->db->get('posts');
         return $query->row_array();
     }

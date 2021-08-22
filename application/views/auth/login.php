@@ -13,6 +13,10 @@
             <label for="password" class = "sr-only">Password</label>
             <input type="password" name = "password" id = "password" class = "bg-gray-200 p-4 w-full rounded-lg" placeholder="Password">
         </div>
+        <div class="mb-2">
+            <p class = "error text-red-500"></p>
+        </div>
+
         <div class="mb-4">
             <button class = "bg-blue-500 py-3 px-4 text-white w-full rounded-lg">Login</button>
         </div>
@@ -23,7 +27,8 @@
 
 <script>
 
-    const form = document.getElementById('login_form');
+    const form = document.querySelector('#login_form');
+    const error = document.querySelector('.error');
 
 
 
@@ -34,39 +39,36 @@
         const username = document.querySelector('#username').value.trim()
         const password = document.querySelector('#password').value.trim()
 
-        console.log(username, password);
-
-        const user = {
-            username, password
-        }
-
-        await login(user)
+        await login(username, password)
 
     })
 
-    const login = async (user) => {
+    const login = async (username, password) => {
+
 
         const url = "<?php echo base_url()?>login/store"
 
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: user,
-            dataType: "json",
-            success: function (response) {
+        try {
+            
+            const res = await fetch(`${url}`,{
+                method: 'POST',
+                body: JSON.stringify({
+                    username, password
+                }),
+                headers: {"Content-Type": "application/json"},
+            })
 
+            const { success , message } = await res.json();
 
-              console.log(response);
-              let {status, message }  = response;
-             
-             if(!status){
-                toastr.error(message)
-                return false;
-             }
-             location.reload();
-            }
-        });
+            //reload the page if success = true
+            if(success) location.reload();
 
+            //show the error
+            error.innerText = message;
+            
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 

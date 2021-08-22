@@ -86,7 +86,7 @@
             data: {
                 id
             },
-           // dataType: "json",
+            dataType: "json",
             success: function (response) {
 
                 

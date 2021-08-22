@@ -12,5 +12,6 @@ $route['posts/create'] = 'Post/create';
 $route['posts/update'] = 'Post/update';
 $route['posts/destroy'] = 'Post/destroy';
 
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = false;
